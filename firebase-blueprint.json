@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "AppConfig": {
+      "title": "App Configuration",
+      "description": "Global application settings like bank info",
+      "type": "object",
+      "properties": {
+        "bank": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "no": { "type": "string" },
+            "user": { "type": "string" }
+          }
+        }
+      }
+    },
+    "Person": {
+      "title": "Person",
+      "description": "A member of the group",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "credit": { "type": "number" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "FoodItem": {
+      "title": "Food Item",
+      "description": "A shared item or pot",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "eaters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "weight": { "type": "number" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "eaters"]
+    },
+    "PaymentHistory": {
+      "title": "Payment History",
+      "description": "Record of payments made by members",
+      "type": "object",
+      "properties": {
+        "personName": { "type": "string" },
+        "amount": { "type": "number" },
+        "slipUrl": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["personName", "amount", "timestamp"]
+    },
+    "CreditRequest": {
+      "title": "Credit Request",
+      "description": "Request from a member for credit",
+      "type": "object",
+      "properties": {
+        "personId": { "type": "string" },
+        "personName": { "type": "string" },
+        "amount": { "type": "number" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["personId", "personName", "amount", "status"]
+    }
+  },
+  "firestore": {
+    "/config/global": {
+      "schema": "AppConfig",
+      "description": "Global settings"
+    },
+    "/people/{personId}": {
+      "schema": "Person",
+      "description": "Group members"
+    },
+    "/foods/{foodId}": {
+      "schema": "FoodItem",
+      "description": "Shared food items"
+    },
+    "/payments/{paymentId}": {
+      "schema": "PaymentHistory",
+      "description": "Payment records"
+    },
+    "/creditRequests/{requestId}": {
+      "schema": "CreditRequest",
+      "description": "Requests for credit"
+    }
+  }
+}

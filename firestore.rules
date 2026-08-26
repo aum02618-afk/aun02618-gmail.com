@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global config (Bank info)
+    match /config/{document=**} {
+      allow read, write: if true;
+    }
+
+    // People collection
+    match /people/{document=**} {
+      allow read, write: if true;
+    }
+
+    // Foods collection
+    match /foods/{document=**} {
+      allow read, write: if true;
+    }
+
+    // Payments collection (Real-time Payment Notifications & Admin Approvals)
+    match /payments/{document=**} {
+      allow read, write: if true;
+    }
+
+    // Credit Requests collection
+    match /creditRequests/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
